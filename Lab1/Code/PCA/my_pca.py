@@ -35,9 +35,19 @@ ax1.set_title("Vizualization of the dataset (3 out of 13 dimensions)")
 #		use the function eigval,eigvec = linalg.eig(M) and then sort eigenvectors
 #		based on the eigenvalues
 
+data_centered = matrix(data - mean(data, 0))
+cov = transpose(data_centered)*data_centered
 
+eigval, eigvec = linalg.eig(cov)
+eigvec = matrix(eigvec)
 
+varianceExplained = cumsum(eigval)/sum(eigval)
+plt.plot(varianceExplained)
 
+newData2  = data_centered*eigvec[:, :2]
+print varianceExplained[1]
+newData3  = data_centered*eigvec[:, :3]
+print varianceExplained[2]
 
 
 
