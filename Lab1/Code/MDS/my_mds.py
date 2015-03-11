@@ -2,9 +2,9 @@ from numpy import *
 import matplotlib.pyplot as plt
 
 # Load the distance matrix
-D = loadtxt('distanceMatrix.csv', delimiter=',')
+A = loadtxt('distanceMatrix.csv', delimiter=',')
 cities = ['Atl','Chi','Den','Hou','LA','Mia','NYC','SF','Sea','WDC']
-nCities = D.shape[0] # Get the size of the matrix
+nCities = A.shape[0] # Get the size of the matrix
 
 
 k = 2 # e.g. we want to keep 2 dimensions
@@ -22,14 +22,22 @@ k = 2 # e.g. we want to keep 2 dimensions
 #				representation in variable X
 
 
+D = A**2
+A = matrix(A)
+D = matrix(D)
 
+N = A.shape[0]
+J = eye(N) - ones([N, N])/N
+B = -J*D*J/2
 
+U, S, V = linalg.svd(B)
+U = matrix(U)
+V = matrix(V)
 
-
-
+A_2 = U[:, :2]*diag(sqrt(S[:2]))
 
 #=================================================================
-
+X = A_2
 
 # Plot distances in two dimensions
 plt.figure(1)
