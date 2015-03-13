@@ -13,8 +13,8 @@ np.random.shuffle(my_data) # shuffle datataset
 trainingData = my_data[:100,1:] # training data
 trainingLabels = my_data[:100,0] # class labels of training data
 
-testData = my_data[101:,1:] # training data
-testLabels = my_data[101:,0] # class labels of training data
+testData = my_data[101:,1:] # test data
+testLabels = my_data[101:,0] # class labels of test data
 
 
 # Training LDA classifier

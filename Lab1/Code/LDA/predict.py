@@ -18,8 +18,13 @@ def predict(X, projected_centroid, W):
     # ====================== YOUR CODE HERE ======================
     # Instructions: Fill in the code to implement the classification
     # part of LDA. Follow the steps given in the assigment.
-    
-    
+    classNum = projected_centroid.shape[0]
+    label = np.zeros(projected_data.shape[0])
+    for i in range(projected_data.shape[0]):
+        norms = np.zeros(classNum)
+        for j in range(classNum):
+            norms[j] = np.linalg.norm(projected_data[i, :]-projected_centroid[j, :])
+        label[i] = np.argmin(norms)
     
     
     
