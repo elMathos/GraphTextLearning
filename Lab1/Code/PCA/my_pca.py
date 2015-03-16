@@ -39,6 +39,10 @@ data_centered = matrix(data - mean(data, 0))
 cov = transpose(data_centered)*data_centered
 
 eigval, eigvec = linalg.eig(cov)
+# sort the eigenvectors by descending eigenvalues
+idx = eigval.argsort()[::-1]  
+eigval = eigval[idx]
+eigvec = eigvec[:,idx]
 eigvec = matrix(eigvec)
 
 varianceExplained = cumsum(eigval)/sum(eigval)
