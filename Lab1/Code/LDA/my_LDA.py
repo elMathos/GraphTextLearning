@@ -30,10 +30,16 @@ def my_LDA(X, Y):
         for x in cluster_i:        
             Sw += np.transpose(np.matrix(x-centroids[:, i-1]))*np.matrix(x-centroids[:, i-1])
         Sb += len(cluster_i)*np.transpose(np.matrix(centroids[:, i-1]-totalMean))*np.matrix(centroids[:, i-1]-totalMean)
-    
+    Sb = np.matrix(Sb)
+    Sw = np.matrix(Sw)
     eigval, eigvec = np.linalg.eig(np.linalg.inv(Sw)*Sb)
+    # sort the eigenvectors by descending eigenvalues
+    idx = eigval.argsort()[::-1]  
+    eigval = eigval[idx]
+    eigvec = eigvec[:,idx]
     eigvec = np.matrix(eigvec)
     W = eigvec[:, :(classNum-1)]
+    X = np.matrix(X)
     X_lda = X * W
     projected_centroid = np.transpose(centroids) * W
     
