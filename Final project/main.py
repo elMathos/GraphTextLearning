@@ -6,15 +6,16 @@ Main file for the ALTeGraD final assignment
 
 
 from loaddata import load_data
-from bagofwords import tf_idf
+from bagofwords import dictionary, tf_idf
 from nearestneighbors import kNN_predict
 
 # load the data and labels
 train_data, train_labels, test_data, test_labels = load_data()
 
 # get tf_idf matrices
-tfidf_train = tf_idf(train_data)
-tfidf_test = tf_idf(test_data)
+dico = dictionary(train_data)
+tfidf_train = tf_idf(train_data, dico)
+tfidf_test = tf_idf(test_data, dico)
 
 # Nearest Neighbors
 k = 5

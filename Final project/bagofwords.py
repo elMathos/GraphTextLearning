@@ -32,8 +32,7 @@ def wordcount_matrix(data, dico):
     return mat
 
 
-def tf_idf(data):
-    dico = dictionary(data)
+def tf_idf(data, dico):
     mat = wordcount_matrix(data, dico)
     # from the wordcount matrix, compute the tf-idf weights
     n_doc = mat.shape[0]
