@@ -1,2 +1,6 @@
 
 *.pyc
+*.gz
+*.pdf
+*.log
+*.aux
