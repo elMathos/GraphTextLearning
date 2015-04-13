@@ -35,14 +35,28 @@
 
 We first implemented the bag-of-words model. From the train and test datasets, two matrices of size n\_documents x n\_terms were computed, using the dictionary of terms present in the train dataset. Then, each document can be seen as a vector in dimension n\_terms.
 \\We tried out several classification algorithm on it:
-- k-Nearest Neighbors: for a given document of the test dataset, we find out the k closest documents in the train dataset using cosine similarity. Then, we assign to the test document the most frequent label among these k neighbors. Arbitrarily, in case of equality, the first label in alphabetic order among the most frequent will be picked up.
-- Support Vector Machine: we used a Gaussian kernel, and cross-validation was made in order to select best values for parameters C and gamma.
-- Random Forest: we made a cross-validation to select the optimal number of trees to compute.
+\begin{itemize}
+	\item k-Nearest Neighbors: for a given document of the test dataset, we find out the k closest documents in the train dataset using cosine similarity. Then, we assign to the test document the most frequent label among these k neighbors. Arbitrarily, in case of equality, the first label in alphabetic order among the most frequent will be picked up.
+	\item Support Vector Machine: we used a Gaussian kernel, and cross-validation was made in order to select best values for parameters C and gamma.
+	\item Random Forest: we made a cross-validation to select the optimal number of trees to compute.
+	\item Adaboost: we also made a cross-validation for the number of boundaries here.
+\end{itemize}
+
 
 \subsection{Results}
 
-As suggested in the subject, we used micro-averaging and macro-averaging precision and recall in order to evaluate the performances of our classifiers. We can note that micro-averaging precision and recall are indeed the same number.
+As suggested in the subject, we used micro-averaging and macro-averaging precision and recall in order to evaluate the performances of our classifiers. We can notice that micro-averaging precision and recall are indeed the same number.
+\\Cross-validations were made upstream in order to find the optimal values for the parameters: k for k-NN, C and $\gamma$ for RBF-SVM, number of trees for random forests. With these parameters fitted, here are the different performances the algorithms achieved :
 
-
+\begin{table}[H]
+	\begin{tabular}{|l|c|c|c|c|}
+		\hline
+		\multicolumn{1}{|c|}{Algorithm \textbackslash Performance} & \begin{tabular}[c]{@{}c@{}}Micro-averaging\\ precision/recall\end{tabular} & \begin{tabular}[c]{@{}c@{}}Macro-averaging\\ precision\end{tabular} & \begin{tabular}[c]{@{}c@{}}Macro-averaging\\ recall\end{tabular} & Training time \\ \hline
+		k-NN                                        & 84,42\%                                                                    & 85,40\%                                                             & 82,74\%                                                          & a s           \\ \hline
+		SVM                                         & 89,31\%                                                                    & 92,63\%                                                             & 65,06\%                                                          & b s           \\ \hline
+		Random Forest                               & 90,2\%                                                                     & 89,46\%                                                             & 62,84\%                                                          & c s           \\ \hline
+		Adaboost                                    & 76,88\%                                                                    & 57,02\%                                                             & 57,86\%                                                          & d s           \\ \hline
+	\end{tabular}
+\end{table}
 
 \end{document}
