@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-represent each document as an undirected graph with unweigted edges 
+represent each document as an undirected graph with weigthed edges
 
 @authors: Mathurin Massias, Clement Nicolle, Michael Weiss
 """
@@ -10,7 +10,7 @@ from __future__ import division
 import networkx as nx
 import numpy as np
 
-class GraphOfWords :
+class GraphOfWordsWeighted :
     def __init__ (self,train_data,dico,sizeWindow):
         self.train_data=train_data
         self.n_doc = len(train_data)
@@ -19,7 +19,7 @@ class GraphOfWords :
         self.documentTerm=np.zeros((self.n_doc,self.n_words))
         self.graphs=[]        
         for i in range (self.n_doc):
-            graph=nx.Graph()
+            graph=nx.MultiGraph()
             doc = np.asarray(train_data[i])
             graph.add_edge(doc[0],doc[1])
             for j in range (len(doc)):
