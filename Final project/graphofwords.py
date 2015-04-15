@@ -54,4 +54,7 @@ class GraphOfWords :
             # multiply tf in column j by idf
             self.documentTerm[:, j] *= idf 
         
-        
+    def normalize(self):
+        #cosine normalization
+        norms=np.linalg.norm(self.documentTerm,axis=1)
+        self.documenTerm=np.diag(1.0/norms)*np.mat(self.documentTerm)

@@ -25,6 +25,7 @@ dico = dictionary(train_data)
 graphs=GraphOfWordsWeighted(train_data,dico,4)
 graphs.compute_documentTerm(0,dico)
 graphs.penalize_idf(dico)
+graphs.normalize()
 
 ## Nearest Neighbors
 #k = 5
