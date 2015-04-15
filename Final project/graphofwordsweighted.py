@@ -9,6 +9,7 @@ represent each document as an undirected graph with weigthed edges
 from __future__ import division
 import networkx as nx
 import numpy as np
+from math import log
 
 class GraphOfWordsWeighted :
     def __init__ (self,train_data,dico,sizeWindow):
@@ -42,3 +43,13 @@ class GraphOfWordsWeighted :
                     for word,value in eig_centrality.items():
                         index=np.nonzero(dico==word)                    
                         self.documentTerm[i,index[0][0]]=value
+                        
+    def penalize_idf(self,dico):
+        for j in range(self.n_words):
+            df = len([i for i in range(self.n_doc) if self.documentTerm[i, j] != 0])
+            if df != 0:
+                idf = log(self.n_doc/df)
+            else:
+                idf = 0
+            # multiply tf in column j by idf
+            self.documentTerm[:, j] *= idf        

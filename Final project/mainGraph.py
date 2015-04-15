@@ -9,7 +9,7 @@ Main file for the ALTeGraD final assignment
 import networkx as nx
 from loaddata import load_data
 from bagofwords import dictionary
-from graphofwordsv2 import GraphOfWordsv2
+from graphofwordsweighted import GraphOfWordsWeighted
 from nearestneighbors import kNN_predict
 from classif import SVM_predict, RF_predict, Adaboost_predict
 
@@ -22,10 +22,9 @@ train_data, train_labels, test_data, test_labels = load_data()
 dico = dictionary(train_data)
 
 
-graphs=GraphOfWordsv2(train_data,dico,4)
+graphs=GraphOfWordsWeighted(train_data,dico,4)
 graphs.compute_documentTerm(0,dico)
-
-vector=graphs.documentTerm[100]
+graphs.penalize_idf(dico)
 
 ## Nearest Neighbors
 #k = 5
