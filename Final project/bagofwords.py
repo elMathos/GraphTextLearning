@@ -36,6 +36,8 @@ def wordcount_matrix(data, dico):
             except KeyError:
                 pass
                 #silent fail for now, word not in dico because it only appears in test set, thus is not in dico/real_dico
+        # frequency of words in document:
+        mat[i, :] = mat[i, :]/sum(mat[i, :])        
     return mat
 
 
