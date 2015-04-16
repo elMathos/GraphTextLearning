@@ -22,17 +22,27 @@ train_data, train_labels, test_data, test_labels = load_data()
 dico = dictionary(train_data)
 
 
-graphs=GraphOfWordsWeighted(train_data,dico,4)
-graphs.compute_documentTerm(0,dico)
-graphs.penalize_idf(dico)
-graphs.normalize()
+graphsTrain=GraphOfWordsWeighted(train_data,dico,4)
+graphsTrain.compute_documentTerm(0,dico)
+graphsTrain.penalize_idf(dico)
+graphsTrain.normalize()
 
-## Nearest Neighbors
-#k = 5
-#labels_pred_kNN = kNN_predict(k, tfidf_train, train_labels, tfidf_test)
-## SVM
-#labels_pred_SVM = SVM_predict(tfidf_train, train_labels, tfidf_test)
-## Random Forest
-#labels_pred_RF = RF_predict(tfidf_train, train_labels, tfidf_test)
-## Adaboost
-#labels_pred_Adaboost = Adaboost_predict(tfidf_train, train_labels, tfidf_test)
+graphsTest=GraphOfWordsWeighted(test_data,dico,4)
+graphsTest.compute_documentTerm(0,dico)
+graphsTest.penalize_idf(dico)
+graphsTest.normalize()
+
+
+train=graphsTrain.documentTerm
+# Nearest Neighbors
+k = 5
+labels_pred_kNN = kNN_predict(k, graphsTrain.documentTerm, train_labels, graphsTest.documentTerm)
+# SVM
+labels_pred_SVM = SVM_predict(graphsTrain.documentTerm, train_labels, graphsTest.documentTerm)
+# Random Forest
+labels_pred_RF = RF_predict(graphsTrain.documentTerm, train_labels, graphsTest.documentTerm)
+# Adaboost
+labels_pred_Adaboost = Adaboost_predict(graphsTrain.documentTerm, train_labels, graphsTest.documentTerm)
+
+
+## t

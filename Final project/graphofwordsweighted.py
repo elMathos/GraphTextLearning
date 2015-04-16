@@ -35,8 +35,9 @@ class GraphOfWordsWeighted :
             for i in range(self.n_doc) :
                 deg_centrality = nx.degree_centrality(self.graphs[i])
                 for word,value in deg_centrality.items():
-                    index=np.nonzero(dico==word)                    
-                    self.documentTerm[i,index[0][0]]=value
+                    index=np.nonzero(dico==word)
+                    if len(index[:][0])!=0:
+                        self.documentTerm[i,index[0][0]]=value
         elif mode==1:
             for i in range(self.n_doc):
                     eig_centrality=nx.eigenvector_centrality(self.graphs[i])
@@ -57,4 +58,4 @@ class GraphOfWordsWeighted :
     def normalize(self):
         #cosine normalization
         norms=np.linalg.norm(self.documentTerm,axis=1)
-        self.documenTerm=np.diag(1.0/norms)*np.mat(self.documentTerm)
+        self.documentTerm=np.asarray(np.diag(1.0/norms)*np.mat(self.documentTerm))
