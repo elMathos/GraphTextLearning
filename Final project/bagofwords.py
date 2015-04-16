@@ -21,7 +21,6 @@ def wordcount_matrix(data, dico):
     n_doc = len(data)
     n_words = len(dico)
     mat = np.zeros((n_doc, n_words))
-    
     real_dico = {}
     idx = 0
     for word in dico:
@@ -32,8 +31,11 @@ def wordcount_matrix(data, dico):
         doc = np.asarray(data[i])
         print "Counting words for document %d over %d" % (i+1, n_doc)
         for word in doc:
-            mat[i, real_dico[word]] = mat[i, real_dico[word]] + 1
-
+            try:
+                mat[i, real_dico[word]] = mat[i, real_dico[word]] + 1
+            except KeyError:
+                pass
+                #silent fail for now, word not in dico because it only appears in test set, thus is not in dico/real_dico
     return mat
 
 
