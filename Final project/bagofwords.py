@@ -21,13 +21,18 @@ def wordcount_matrix(data, dico):
     n_doc = len(data)
     n_words = len(dico)
     mat = np.zeros((n_doc, n_words))
+    
+    real_dico = {}
+    idx = 0
+    for word in dico:
+        real_dico[word]= idx
+        idx=idx+1
+
     for i in range(n_doc):
         doc = np.asarray(data[i])
         print "Counting words for document %d over %d" % (i+1, n_doc)
-        for j in range(n_words):
-            word = dico[j]
-            # nb of occurences of word in doc :
-            mat[i, j] = len(np.where(doc == word)[0])
+        for word in doc:
+            mat[i, real_dico[word]] = mat[i, real_dico[word]] + 1
 
     return mat
 
