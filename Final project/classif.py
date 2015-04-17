@@ -8,7 +8,7 @@ from sklearn.ensemble import AdaBoostClassifier
 
 
 def SVM_predict(train_data, train_labels, test_data,
-                C=1.0, gamma=0.0, verbose=2):
+                C=1.0, gamma=0.1, verbose=2):
     clf = svm.SVC(C=C, gamma=gamma)
     clf.fit(train_data, train_labels)
     return clf.predict(test_data)
