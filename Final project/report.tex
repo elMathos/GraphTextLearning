@@ -34,7 +34,7 @@
 \subsection{Description and classification algorithms}
 
 We first implemented the bag-of-words model. From the train and test datasets, two matrices of size $n\_documents \times n\_terms$ were computed, using the dictionary of terms present in the train dataset. Then, each document is represented by a vector in dimension $n\_terms$ (a line of the matrix).
-\\The training set contains 14,575 different words in 5485 documents. THe test set is composed of 2,189 documents.
+\\The training set contains 14,575 different words in 5485 documents. The test set is composed of 2,189 documents. The features are extracted in 60 s.
 \\We tried out several classification algorithms on the feature dataset:
 \begin{itemize}
 	\item k-Nearest Neighbors: for a given document of the test dataset, we find out the k closest documents in the train dataset using cosine similarity. Then, we assign to the test document the most frequent label among these k neighbors. Arbitrarily, in case of tie, the first label in alphabetic order among the most frequent will be picked up.
@@ -47,7 +47,7 @@ We first implemented the bag-of-words model. From the train and test datasets, t
 \subsection{Results}
 
 As suggested in the subject, we used micro-averaging and macro-averaging precision and recall in order to evaluate the performances of our classifiers. We can notice that micro-averaging precision and recall are indeed the same number.
-\\Cross-validations were made upstream in order to find the optimal values for the parameters: k for k-NN, C and $\gamma$ for RBF-SVM, number of trees for random forests. With these parameters fitted, here are the different performances the algorithms achieved :
+\\Cross-validations were made upstream in order to find the optimal values for the parameters: k for k-NN, C and $\gamma$ for RBF-SVM, number of trees for random forests. With these parameters fitted, here are the different performances the algorithms achieved:
 
 \begin{table}[h]
 \hspace*{-17mm}	\begin{tabular}{|l|c|c|c|c|}
@@ -126,7 +126,7 @@ As we previously said, we firstly made the choice to use a size of a sliding win
 \begin{table}[H]
 	\begin{tabular}{|l|c|c|c|}
 		\hline
-		\multicolumn{1}{|c|}{Sliding window size\textbackslash Algorithm} & \begin{tabular}[c]{@{}c@{}}k-NN\end{tabular} & \begin{tabular}[c]{@{}c@{}}SVM\end{tabular} & \begin{tabular}[c]{@{}c@{}}Random Forest\end{tabular} \\ \hline
+		\multicolumn{1}{|c|}{Sliding window size\textbackslash Algorithm} & \begin{tabular}[c]{@{}c@{}}NN\end{tabular} & \begin{tabular}[c]{@{}c@{}}SVM\end{tabular} & \begin{tabular}[c]{@{}c@{}}Random Forest\end{tabular} \\ \hline
 		$k=2$                                        & 82.46\%                                                                    & 93.24\%                                                           & 90.59\%           \\ \hline
 		$k=3$                                        & 85.15\%                                                                    & 93.51\%                                                             & 89.22\%            \\ \hline
 		$k=4$                               & 86.25\%                                                                     & 95.25\%                                                             & 91.82\%             \\ \hline
@@ -137,4 +137,7 @@ As we previously said, we firstly made the choice to use a size of a sliding win
  
 As expected the best precision is obtained for our classification algorithms when the the size of the sliding window is of size $4$. Of course the time needed to construct those graphs increases with the size of the sliding window but in our problem this time was low enough to prefer a size of $4$ to a size of $3$ as we only $60s$ more to obtain results with an approximately $2\%$ better precision.
 
+\section{Conclusion}
+Regarding the time taken to construct the classification model, Random Forest is by far the best (150 times quicker than SVM). The classification performances are in the same order for all the features: first is SVM, then RF, then NN and finally Adaboost. Amongst all features, graph-of-words gives better results than bag-of-words, but takes more time to construct. For this model, degree centrality is better than eigenvector centrality. The influence of the side of the sliding window is critical, both in terms of precision and time complexity of the resulting graphs. A size of 4 is a good trade off between these two aspects. What's more, the use of a weighted edge graph improves by a factor of 3 the time taken to construct the document matrix.
+\\From all of this, we recommend the use of RF with a graph-of-words model, with weighted graph and degree centrality. If recall is extra important and model can be constructed with all the time needed, then SVM can perform better. In other cases, it is quicker to train a RF.
 \end{document}
