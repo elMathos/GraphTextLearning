@@ -40,9 +40,10 @@ class GraphOfWords :
                         self.documentTerm[i,index[0][0]]=value
         elif mode==1:
             for i in range(self.n_doc):
-                    eig_centrality=nx.eigenvector_centrality(self.graphs[i])
-                    for word,value in eig_centrality.items():
-                        index=np.nonzero(dico==word)                    
+                eig_centrality=nx.eigenvector_centrality(self.graphs[i])
+                for word,value in eig_centrality.items():
+                    index=np.nonzero(dico==word)      
+                    if len(index[:][0])!=0 :    
                         self.documentTerm[i,index[0][0]]=value
                         
     def penalize_idf(self,dico):

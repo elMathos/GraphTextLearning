@@ -59,4 +59,41 @@ As suggested in the subject, we used micro-averaging and macro-averaging precisi
 	\end{tabular}
 \end{table}
 
+\section{Graph-of-words model}
+The we implemented a Graph-of-words model. As the subject suggested it we firstly tried to implement it with windows of size $4$ to find the edges. This allowed us to have better classification results overall. \\
+The two measure we associated to the graph nodes were degree centrality measure and eigenvector centrality measure.
+The two models of graphs we used were undirected unweigthed graphs, and undirected unweighted multigraphs of the library networkx. The second one allows us to have multiple same edge between $2$ nodes and therefore to have an equivalent of an undirected weighted graph.\\
+Since after the graphs were constructed, the final input to use for the classification algorithms remained a document-term matrix of the same size than the one obtained in the bag-of-words model, we applied the same classification algorithms in order to compare the results.
+\subsection{Graphs with unweighted edges}
+\paragraph{Degree Centrality measure \newline}
+create data=312s, SVM=1395s, RF=1429453798s, kNN=149453794s, adaboost=1642s
+
+\begin{table}[H]
+	\begin{tabular}{|l|c|c|c|}
+		\hline
+		\multicolumn{1}{|c|}{Algorithm \textbackslash Performance} & \begin{tabular}[c]{@{}c@{}}Micro-averaging\\ precision/recall\end{tabular} & \begin{tabular}[c]{@{}c@{}}Macro-averaging\\ precision\end{tabular} & \begin{tabular}[c]{@{}c@{}}Macro-averaging\\ recall\end{tabular} \\ \hline
+		k-NN                                        & 86.16\%                                                                    & 83,64\%                                                             & 82,22\%           \\ \hline
+		SVM                                         & 95,16\%                                                                    & 95,44\%                                                             & 79,89\%            \\ \hline
+		Random Forest                               & 91,09\%                                                                     & 86,05\%                                                             & 66,07\%             \\ \hline
+		Adaboost                                    & 79,53\%                                                                    & 67,18\%                                                             & 67,36\%              \\ \hline
+	\end{tabular}
+\end{table}
+\subsection{Graph with Weighted Edges}
+a peu pres la meme sauf timeStruc=134s
+\paragraph{Degree Centrality measure \newline}
+\begin{table}[H]
+	\begin{tabular}{|l|c|c|c|}
+		\hline
+		\multicolumn{1}{|c|}{Algorithm \textbackslash Performance} & \begin{tabular}[c]{@{}c@{}}Micro-averaging\\ precision/recall\end{tabular} & \begin{tabular}[c]{@{}c@{}}Macro-averaging\\ precision\end{tabular} & \begin{tabular}[c]{@{}c@{}}Macro-averaging\\ recall\end{tabular} \\ \hline
+		k-NN                                        & 86,25\%                                                                    & 86,96\%                                                             & 81,55\%           \\ \hline
+		SVM                                         & 95,25\%                                                                    & 95,38\%                                                             & 79,62\%            \\ \hline
+		Random Forest                               & 91,82\%                                                                     & 90,58\%                                                             & 69,33\%             \\ \hline
+		Adaboost                                    & 79,21\%                                                                    & 69,01\%                                                             & 65,97\%              \\ \hline
+	\end{tabular}
+\end{table}
+
+
+
+
+
 \end{document}
