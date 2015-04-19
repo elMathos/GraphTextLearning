@@ -20,3 +20,4 @@ def errorPercentage(algo, labels_true, labels_pred):
     matching = np.array(labels_true) == np.array(labels_pred)
     perc = sum(matching)/len(matching)
     print str(100*perc) +  " % matching percentage for " + algo
+    return perc
