@@ -40,7 +40,7 @@ class GraphOfWords :
                         self.documentTerm[i,index[0][0]]=value
         elif mode==1:
             for i in range(self.n_doc):
-                eig_centrality=nx.eigenvector_centrality(self.graphs[i])
+                eig_centrality=nx.eigenvector_centrality(self.graphs[i],1000)
                 for word,value in eig_centrality.items():
                     index=np.nonzero(dico==word)      
                     if len(index[:][0])!=0 :    

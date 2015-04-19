@@ -9,7 +9,7 @@ Main file for the ALTeGraD final assignment
 from loaddata import load_data
 import time
 from bagofwords import dictionary
-from graphofwords import GraphOfWords
+from graphofwordsweighted import GraphOfWordsWeighted
 from nearestneighbors import kNN_predict
 from classif import SVM_predict, RF_predict, Adaboost_predict
 from evaluation import errorPercentage
@@ -23,13 +23,13 @@ train_data, train_labels, test_data, test_labels = load_data()
 dico = dictionary(train_data)
 
 
-graphsTrain=GraphOfWords(train_data,dico,4)
-graphsTrain.compute_documentTerm(1,dico)
+graphsTrain=GraphOfWordsWeighted(train_data,dico,2)
+graphsTrain.compute_documentTerm(0,dico)
 graphsTrain.penalize_idf(dico)
 graphsTrain.normalize()
 
-graphsTest=GraphOfWords(test_data,dico,4)
-graphsTest.compute_documentTerm(1,dico)
+graphsTest=GraphOfWordsWeighted(test_data,dico,2)
+graphsTest.compute_documentTerm(0,dico)
 graphsTest.penalize_idf(dico)
 graphsTest.normalize()
 
@@ -40,16 +40,12 @@ k = 5
 labels_pred_kNN = kNN_predict(k, graphsTrain.documentTerm, train_labels, graphsTest.documentTerm)
 errorPercentage("kNN", labels_pred_kNN, test_labels)
 
-timeKNN=time.time()-timeStruc
 # SVM
 labels_pred_SVM = SVM_predict(graphsTrain.documentTerm, train_labels, graphsTest.documentTerm)
 errorPercentage("SVM", labels_pred_SVM, test_labels)
-timeSVM=time.time()-timeKNN
 # Random Forest
 labels_pred_RF = RF_predict(graphsTrain.documentTerm, train_labels, graphsTest.documentTerm)
 errorPercentage("RF", labels_pred_RF, test_labels)
-timeRF=time.time()-timeSVM
 # Adaboost
 labels_pred_Adaboost = Adaboost_predict(graphsTrain.documentTerm, train_labels, graphsTest.documentTerm)
 errorPercentage("Adaboost", labels_pred_Adaboost, test_labels)
-timeADA=time.time()-timeRF

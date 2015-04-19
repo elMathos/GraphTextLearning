@@ -105,7 +105,7 @@ Here, using the networkx eigenvector centrality measure the time of execution ne
 
 Therefore using the Eigenvector centrality measure does not give any remarkable improvement. The precisions score overall remain the same.
 \subsection{Graph with Weighted Edges}
-With the multigraph structure, we had a particularly small time of execution needed to compute the document term matrix which was of $120$s. Of course, we added every edge to the multigraph without checking if the edge already existed as it is done in the undirect graph structure we used previously. Since the eigenvector centrality measure did not seem to greatly improve our classification measure, we only tried this structure associated to a degree centrality measure.
+With the multigraph structure, we had a particularly small time of execution needed to compute the document term matrix which was of $120$s. Of course, we added every edge to the multigraph without checking if the edge already existed as it is done in the undirected graph structure we used previously. Since the eigenvector centrality measure did not seem to greatly improve our classification measure, we only tried this structure associated to a degree centrality measure.
 \begin{table}[H]
 	\begin{tabular}{|l|c|c|c|}
 		\hline
@@ -115,11 +115,26 @@ With the multigraph structure, we had a particularly small time of execution nee
 		Random Forest                               & 91.82\%                                                                     & 90.58\%                                                             & 69.33\%             \\ \hline
 		Adaboost                                    & 79.21\%                                                                    & 69.01\%                                                             & 65.97\%              \\ \hline
 	\end{tabular}
-	\caption{Classification performance by alogrithm for Weighted Edges with Degree Centrality measure}
+	\caption{Classification performance by algorithm for Weighted Edges with Degree Centrality measure}
 \end{table}
 
+Therefore the results obtained for a multigraph (ie undirected weighted graph) are slightly better. These improvement are not really significant but regarding to the time needed to compute the document term matrix which was divided by a factor $3$ we considered the multigraph as the best structure for our classification problem. The best classification algorithm still being the one-vs-one multiclass SVM like in our bag-of-words model.
 
 \subsection{Influence of the size of the sliding window} 
+As we previously said, we firstly made the choice to use a size of a sliding window of size $4$ to be sure to obtain good results. In a second time, we changed the size $k$ of the sliding window. Here is what we obtained with several values for $k$ for undirected weighted graphs with the degree centrality measure:
 
+\begin{table}[H]
+	\begin{tabular}{|l|c|c|c|}
+		\hline
+		\multicolumn{1}{|c|}{Sliding window size\textbackslash Algorithm} & \begin{tabular}[c]{@{}c@{}}k-NN\end{tabular} & \begin{tabular}[c]{@{}c@{}}SVM\end{tabular} & \begin{tabular}[c]{@{}c@{}}Random Forest\end{tabular} \\ \hline
+		$k=2$                                        & 82.46\%                                                                    & 93.24\%                                                           & 90.59\%           \\ \hline
+		$k=3$                                        & 85.15\%                                                                    & 93.51\%                                                             & 89.22\%            \\ \hline
+		$k=4$                               & 86.25\%                                                                     & 95.25\%                                                             & 91.82\%             \\ \hline
+		$k=5$                                    & 86.57\%                                                                    & 93.56\%                                                             & 89.86\%              \\ \hline
+	\end{tabular}
+	\caption{Precision with micro-averaging by  algorithm for Degree Centrality measure}
+\end{table}
+ 
+As expected the best precision is obtained for our classification algorithms when the the size of the sliding window is of size $4$. Of course the time needed to construct those graphs increases with the size of the sliding window but in our problem this time was low enough to prefer a size of $4$ to a size of $3$ as we only $60s$ more to obtain results with an approximately $2\%$ better precision.
 
 \end{document}
