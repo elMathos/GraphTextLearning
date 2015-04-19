@@ -33,10 +33,10 @@
 
 \subsection{Description and classification algorithms}
 
-We first implemented the bag-of-words model. From the train and test datasets, two matrices of size n\_documents x n\_terms were computed, using the dictionary of terms present in the train dataset. Then, each document can be seen as a vector in dimension n\_terms.
-\\We tried out several classification algorithm on it:
+We first implemented the bag-of-words model. From the train and test datasets, two matrices of size $n\_documents \times n\_terms$ were computed, using the dictionary of terms present in the train dataset. Then, each document is represented by a vector in dimension $n\_terms$.
+\\We tried out several classification algorithms on the feature dataset:
 \begin{itemize}
-	\item k-Nearest Neighbors: for a given document of the test dataset, we find out the k closest documents in the train dataset using cosine similarity. Then, we assign to the test document the most frequent label among these k neighbors. Arbitrarily, in case of equality, the first label in alphabetic order among the most frequent will be picked up.
+	\item k-Nearest Neighbors: for a given document of the test dataset, we find out the k closest documents in the train dataset using cosine similarity. Then, we assign to the test document the most frequent label among these k neighbors. Arbitrarily, in case of tie, the first label in alphabetic order among the most frequent will be picked up.
 	\item Support Vector Machine: we used a Gaussian kernel, and cross-validation was made in order to select best values for parameters C and gamma.
 	\item Random Forest: we made a cross-validation to select the optimal number of trees to compute.
 	\item Adaboost: we also made a cross-validation for the number of boundaries here.
@@ -48,8 +48,8 @@ We first implemented the bag-of-words model. From the train and test datasets, t
 As suggested in the subject, we used micro-averaging and macro-averaging precision and recall in order to evaluate the performances of our classifiers. We can notice that micro-averaging precision and recall are indeed the same number.
 \\Cross-validations were made upstream in order to find the optimal values for the parameters: k for k-NN, C and $\gamma$ for RBF-SVM, number of trees for random forests. With these parameters fitted, here are the different performances the algorithms achieved :
 
-\begin{table}[H]
-	\begin{tabular}{|l|c|c|c|c|}
+\begin{table}[h]
+\hspace*{-17mm}	\begin{tabular}{|l|c|c|c|c|}
 		\hline
 		\multicolumn{1}{|c|}{Algorithm \textbackslash Performance} & \begin{tabular}[c]{@{}c@{}}Micro-averaging\\ precision/recall\end{tabular} & \begin{tabular}[c]{@{}c@{}}Macro-averaging\\ precision\end{tabular} & \begin{tabular}[c]{@{}c@{}}Macro-averaging\\ recall\end{tabular} & Training time \\ \hline
 		k-NN                                        & 84,42\%                                                                    & 85,40\%                                                             & 82,74\%                                                          & 1543 s           \\ \hline
@@ -57,7 +57,8 @@ As suggested in the subject, we used micro-averaging and macro-averaging precisi
 		Random Forest                               & 91,6\%                                                                     & 89,46\%                                                             & 62,84\%                                                          & 7 s           \\ \hline
 		Adaboost                                    & 79,1\%                                                                    & 57,02\%                                                             & 57,86\%                                                          & 204 s           \\ \hline
 	\end{tabular}
-\end{table}
+	\caption{Time and classification performance for various algorithms on the bag-of-words model}
+	\end{table}
 
 \section{Graph-of-words model}
 The we implemented a Graph-of-words model. As the subject suggested it we firstly tried to implement it with windows of size $4$ to find the edges. This allowed us to have better classification results overall. \\
