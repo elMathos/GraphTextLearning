@@ -33,7 +33,8 @@
 
 \subsection{Description and classification algorithms}
 
-We first implemented the bag-of-words model. From the train and test datasets, two matrices of size $n\_documents \times n\_terms$ were computed, using the dictionary of terms present in the train dataset. Then, each document is represented by a vector in dimension $n\_terms$.
+We first implemented the bag-of-words model. From the train and test datasets, two matrices of size $n\_documents \times n\_terms$ were computed, using the dictionary of terms present in the train dataset. Then, each document is represented by a vector in dimension $n\_terms$ (a line of the matrix).
+\\The training set contains 14,575 different words in 5485 documents. THe test set is composed of 2,189 documents.
 \\We tried out several classification algorithms on the feature dataset:
 \begin{itemize}
 	\item k-Nearest Neighbors: for a given document of the test dataset, we find out the k closest documents in the train dataset using cosine similarity. Then, we assign to the test document the most frequent label among these k neighbors. Arbitrarily, in case of tie, the first label in alphabetic order among the most frequent will be picked up.
@@ -52,13 +53,18 @@ As suggested in the subject, we used micro-averaging and macro-averaging precisi
 \hspace*{-17mm}	\begin{tabular}{|l|c|c|c|c|}
 		\hline
 		\multicolumn{1}{|c|}{Algorithm \textbackslash Performance} & \begin{tabular}[c]{@{}c@{}}Micro-averaging\\ precision/recall\end{tabular} & \begin{tabular}[c]{@{}c@{}}Macro-averaging\\ precision\end{tabular} & \begin{tabular}[c]{@{}c@{}}Macro-averaging\\ recall\end{tabular} & Training time \\ \hline
-		k-NN                                        & 84,42\%                                                                    & 85,40\%                                                             & 82,74\%                                                          & 1543 s           \\ \hline
-		SVM                                         & 89,31\%                                                                    & 92,63\%                                                             & 65,06\%                                                          & 1021 s           \\ \hline
-		Random Forest                               & 91,6\%                                                                     & 89,46\%                                                             & 62,84\%                                                          & 7 s           \\ \hline
-		Adaboost                                    & 79,1\%                                                                    & 57,02\%                                                             & 57,86\%                                                          & 204 s           \\ \hline
+		k-NN                                        & 84.42\%                                                                    & 85.40\%                                                             & 82.74\%                                                          & 1543 s           \\ \hline
+		SVM                                         & 89.31\%                                                                    & 92.63\%                                                             & 65.06\%                                                          & 1021 s           \\ \hline
+		Random Forest                               & 91.6\%                                                                     & 89.46\%                                                             & 62.84\%                                                          & 7 s           \\ \hline
+		Adaboost                                    & 79.1\%                                                                    & 57.02\%                                                             & 57.86\%                                                          & 204 s           \\ \hline
 	\end{tabular}
 	\caption{Time and classification performance for various algorithms on the bag-of-words model}
 	\end{table}
+For algorithms with a part of randomness (RF), the results are averaged over 10 repetitions.
+\\[5mm]The second quickest, Adaboost performs poorly compared to other algorithms. 
+All other algorithms have very good classification performance. SVM takes time to train, because we use a "one-vs-one" multiclass SVM (needing 14*13/2 binary SVM training). k-NN does not require training, but each classification requires computation of 5,485 cosine distances in dimension 14,575, which takes approximately one second.
+\\Though slowly inferior in terms of macro averaging recall, Random Forest is by far the fastest algorithm (150 times quicker!).
+\\Depending on the trade-off between training time and recall, we would recommend using either a one-vs-one multiclass SVM or a Random Forest for the bag-of-words model.
 
 \section{Graph-of-words model}
 The we implemented a Graph-of-words model. As the subject suggested it we firstly tried to implement it with windows of size $4$ to find the edges. This allowed us to have better classification results overall. \\
@@ -74,11 +80,12 @@ The time of execution needed to compute the document term matrix (and the graphs
 	\begin{tabular}{|l|c|c|c|}
 		\hline
 		\multicolumn{1}{|c|}{Algorithm \textbackslash Performance} & \begin{tabular}[c]{@{}c@{}}Micro-averaging\\ precision/recall\end{tabular} & \begin{tabular}[c]{@{}c@{}}Macro-averaging\\ precision\end{tabular} & \begin{tabular}[c]{@{}c@{}}Macro-averaging\\ recall\end{tabular} \\ \hline
-		k-NN                                        & 86.16\%                                                                    & 83,64\%                                                             & 82,22\%           \\ \hline
-		SVM                                         & 95,16\%                                                                    & 95,44\%                                                             & 79,89\%            \\ \hline
-		Random Forest                               & 91,09\%                                                                     & 86,05\%                                                             & 66,07\%             \\ \hline
-		Adaboost                                    & 79,53\%                                                                    & 67,18\%                                                             & 67,36\%              \\ \hline
+		k-NN                                        & 86.16\%                                                                    & 83.64\%                                                             & 82.22\%           \\ \hline
+		SVM                                         & 95.16\%                                                                    & 95.44\%                                                             & 79.89\%            \\ \hline
+		Random Forest                               & 91.09\%                                                                     & 86.05\%                                                             & 66.07\%             \\ \hline
+		Adaboost                                    & 79.53\%                                                                    & 67.18\%                                                             & 67.36\%              \\ \hline
 	\end{tabular}
+	\caption{Classification performance by algorithm for Degree Centrality measure}
 \end{table}
 
 \paragraph{Eigenvector Centrality measure \newline}
@@ -87,11 +94,13 @@ Here, using the networkx eigenvector centrality measure the time of execution ne
 	\begin{tabular}{|l|c|c|c|}
 		\hline
 		\multicolumn{1}{|c|}{Algorithm \textbackslash Performance} & \begin{tabular}[c]{@{}c@{}}Micro-averaging\\ precision/recall\end{tabular} & \begin{tabular}[c]{@{}c@{}}Macro-averaging\\ precision\end{tabular} & \begin{tabular}[c]{@{}c@{}}Macro-averaging\\ recall\end{tabular} \\ \hline
-		k-NN                                        & 86.71\%                                                                    & 82,53\%                                                             & 81,91\%           \\ \hline
-		SVM                                         & 93,24\%                                                                    & 94,11\%                                                             & 69,66\%            \\ \hline
-		Random Forest                               & 91,65\%                                                                     & 88,95\%                                                             & 68,47\%             \\ \hline
-		Adaboost                                    & 79,03\%                                                                    & 66,49\%                                                             & 60,98\%              \\ \hline
-	\end{tabular}
+		k-NN                                        & 86.71\%                                                                    & 82.53\%                                                             & 81.91\%           \\ \hline
+		SVM                                         & 93.24\%                                                                    & 94.11\%                                                             & 69.66\%            \\ \hline
+		Random Forest                               & 91.65\%                                                                     & 88.95\%                                                             & 68.47\%             \\ \hline
+		Adaboost                                    & 79.03\%                                                                    & 66.49\%                                                             & 60.98\%              \\ \hline
+	\end{tabular}	
+	\caption{Classification performance by algorithm for Eigenvector Centrality measure}
+
 \end{table}
 
 Therefore using the Eigenvector centrality measure does not give any remarkable improvement. The precisions score overall remain the same.
@@ -101,11 +110,12 @@ With the multigraph structure, we had a particularly small time of execution nee
 	\begin{tabular}{|l|c|c|c|}
 		\hline
 		\multicolumn{1}{|c|}{Algorithm \textbackslash Performance} & \begin{tabular}[c]{@{}c@{}}Micro-averaging\\ precision/recall\end{tabular} & \begin{tabular}[c]{@{}c@{}}Macro-averaging\\ precision\end{tabular} & \begin{tabular}[c]{@{}c@{}}Macro-averaging\\ recall\end{tabular} \\ \hline
-		k-NN                                        & 86,25\%                                                                    & 86,96\%                                                             & 81,55\%           \\ \hline
-		SVM                                         & 95,25\%                                                                    & 95,38\%                                                             & 79,62\%            \\ \hline
-		Random Forest                               & 91,82\%                                                                     & 90,58\%                                                             & 69,33\%             \\ \hline
-		Adaboost                                    & 79,21\%                                                                    & 69,01\%                                                             & 65,97\%              \\ \hline
+		k-NN                                        & 86.25\%                                                                    & 86.96\%                                                             & 81.55\%           \\ \hline
+		SVM                                         & 95.25\%                                                                    & 95.38\%                                                             & 79.62\%            \\ \hline
+		Random Forest                               & 91.82\%                                                                     & 90.58\%                                                             & 69.33\%             \\ \hline
+		Adaboost                                    & 79.21\%                                                                    & 69.01\%                                                             & 65.97\%              \\ \hline
 	\end{tabular}
+	\caption{Classification performance by alogrithm for Weighted Edges with Degree Centrality measure}
 \end{table}
 
 
