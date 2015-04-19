@@ -63,10 +63,11 @@ As suggested in the subject, we used micro-averaging and macro-averaging precisi
 The we implemented a Graph-of-words model. As the subject suggested it we firstly tried to implement it with windows of size $4$ to find the edges. This allowed us to have better classification results overall. \\
 The two measure we associated to the graph nodes were degree centrality measure and eigenvector centrality measure.
 The two models of graphs we used were undirected unweigthed graphs, and undirected unweighted multigraphs of the library networkx. The second one allows us to have multiple same edge between $2$ nodes and therefore to have an equivalent of an undirected weighted graph.\\
-Since after the graphs were constructed, the final input to use for the classification algorithms remained a document-term matrix of the same size than the one obtained in the bag-of-words model, we applied the same classification algorithms in order to compare the results.
+Since after the graphs were constructed, the final input to use for the classification algorithms remained a document-term matrix of the same size than the one obtained in the bag-of-words model, we applied the same classification algorithms in order to compare the results.\\
+The same way the score of words per document were penalized by the factor $IDF$ in the bag-of-words model, we also penalized the document-term matrix by the $IDF$ factors.
 \subsection{Graphs with unweighted edges}
 \paragraph{Degree Centrality measure \newline}
-create data=312s, SVM=1395s, RF=1429453798s, kNN=149453794s, adaboost=1642s
+The time of execution needed to compute the document term matrix (and the graphs for every document before) was approximately of 300s. This time was fast enough to allows us to test several different parameters to try to find the best approach for our classification.
 
 \begin{table}[H]
 	\begin{tabular}{|l|c|c|c|}
@@ -78,9 +79,23 @@ create data=312s, SVM=1395s, RF=1429453798s, kNN=149453794s, adaboost=1642s
 		Adaboost                                    & 79,53\%                                                                    & 67,18\%                                                             & 67,36\%              \\ \hline
 	\end{tabular}
 \end{table}
+
+\paragraph{Eigenvector Centrality measure \newline}
+Here, using the networkx eigenvector centrality measure the time of execution needed to compute the document term matrix was around $450$s.  
+\begin{table}[H]
+	\begin{tabular}{|l|c|c|c|}
+		\hline
+		\multicolumn{1}{|c|}{Algorithm \textbackslash Performance} & \begin{tabular}[c]{@{}c@{}}Micro-averaging\\ precision/recall\end{tabular} & \begin{tabular}[c]{@{}c@{}}Macro-averaging\\ precision\end{tabular} & \begin{tabular}[c]{@{}c@{}}Macro-averaging\\ recall\end{tabular} \\ \hline
+		k-NN                                        & 86.71\%                                                                    & 82,53\%                                                             & 81,91\%           \\ \hline
+		SVM                                         & 93,24\%                                                                    & 94,11\%                                                             & 69,66\%            \\ \hline
+		Random Forest                               & 91,65\%                                                                     & 88,95\%                                                             & 68,47\%             \\ \hline
+		Adaboost                                    & 79,03\%                                                                    & 66,49\%                                                             & 60,98\%              \\ \hline
+	\end{tabular}
+\end{table}
+
+Therefore using the Eigenvector centrality measure does not give any remarkable improvement. The precisions score overall remain the same.
 \subsection{Graph with Weighted Edges}
-a peu pres la meme sauf timeStruc=134s
-\paragraph{Degree Centrality measure \newline}
+With the multigraph structure, we had a particularly small time of execution needed to compute the document term matrix which was of $120$s. Of course, we added every edge to the multigraph without checking if the edge already existed as it is done in the undirect graph structure we used previously. Since the eigenvector centrality measure did not seem to greatly improve our classification measure, we only tried this structure associated to a degree centrality measure.
 \begin{table}[H]
 	\begin{tabular}{|l|c|c|c|}
 		\hline
@@ -93,7 +108,7 @@ a peu pres la meme sauf timeStruc=134s
 \end{table}
 
 
-
+\subsection{Influence of the size of the sliding window} 
 
 
 \end{document}
