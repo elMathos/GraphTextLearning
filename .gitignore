@@ -4,3 +4,11 @@
 *.pdf
 *.log
 *.aux
+
+*.toc
+
+*.snm
+
+*.out
+
+*.nav
