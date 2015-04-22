@@ -68,8 +68,8 @@ All other algorithms have very good classification performance. SVM takes time t
 
 \section{Graph-of-words model}
 The we implemented a Graph-of-words model. As the subject suggested it we firstly tried to implement it with windows of size $4$ to find the edges. This allowed us to have better classification results overall. \\
-The two measure we associated to the graph nodes were degree centrality measure and eigenvector centrality measure.
-The two models of graphs we used were undirected unweigthed graphs, and undirected unweighted multigraphs of the library networkx. The second one allows us to have multiple same edge between $2$ nodes and therefore to have an equivalent of an undirected weighted graph.\\
+The two measures we associated to the graph nodes were degree centrality measure and eigenvector centrality measure.
+The two models of graphs we used were undirected unweigthed graphs, and undirected unweighted multigraphs of the library \texttt{networkx}. The second ones allow us to have multiple same edge between $2$ nodes and therefore to have an equivalent of an undirected weighted graph.\\
 Since after the graphs were constructed, the final input to use for the classification algorithms remained a document-term matrix of the same size than the one obtained in the bag-of-words model, we applied the same classification algorithms in order to compare the results.\\
 The same way the score of words per document were penalized by the factor $IDF$ in the bag-of-words model, we also penalized the document-term matrix by the $IDF$ factors.
 \subsection{Graphs with unweighted edges}
@@ -89,7 +89,7 @@ The time of execution needed to compute the document term matrix (and the graphs
 \end{table}
 
 \paragraph{Eigenvector Centrality measure \newline}
-Here, using the networkx eigenvector centrality measure the time of execution needed to compute the document term matrix was around $450$s.  
+Here, using the \texttt{networkx} eigenvector centrality measure the time of execution needed to compute the document term matrix was around $450$s.  
 \begin{table}[H]
 	\begin{tabular}{|l|c|c|c|}
 		\hline
@@ -118,10 +118,10 @@ With the multigraph structure, we had a particularly small time of execution nee
 	\caption{Classification performance by algorithm for Weighted Edges with Degree Centrality measure}
 \end{table}
 
-Therefore the results obtained for a multigraph (ie undirected weighted graph) are slightly better. These improvement are not really significant but regarding to the time needed to compute the document term matrix which was divided by a factor $3$ we considered the multigraph as the best structure for our classification problem. The best classification algorithm still being the one-vs-one multiclass SVM like in our bag-of-words model.
+Therefore the results obtained for a multigraph (ie undirected weighted graph) are slightly better. These improvements are not really significant but regarding to the time needed to compute the document term matrix which was divided by a factor $3$ we considered the multigraph as the best structure for our classification problem. The best classification algorithm still being the one-vs-one multiclass SVM like in our bag-of-words model.
 
 \subsection{Influence of the size of the sliding window} 
-As we previously said, we firstly made the choice to use a size of a sliding window of size $4$ to be sure to obtain good results. In a second time, we changed the size $k$ of the sliding window. Here is what we obtained with several values for $k$ for undirected weighted graphs with the degree centrality measure:
+As we previously said, we firstly made the choice to use a size of a sliding window of $4$ to be sure to obtain good results. In a second time, we changed the size $k$ of the sliding window. Here is what we obtained with several values of $k$ for undirected weighted graphs with the degree centrality measure:
 
 \begin{table}[H]
 	\begin{tabular}{|l|c|c|c|}
@@ -135,7 +135,7 @@ As we previously said, we firstly made the choice to use a size of a sliding win
 	\caption{Precision with micro-averaging by  algorithm for Degree Centrality measure}
 \end{table}
  
-As expected the best precision is obtained for our classification algorithms when the the size of the sliding window is of size $4$. Of course the time needed to construct those graphs increases with the size of the sliding window but in our problem this time was low enough to prefer a size of $4$ to a size of $3$ as we only $60s$ more to obtain results with an approximately $2\%$ better precision.
+As expected the best precision is obtained for our classification algorithms when the sliding window is of size $4$. Of course the time needed to construct those graphs increases with the size of the sliding window but in our problem this time was low enough to prefer a size of $4$ to a size of $3$ as we only $60s$ more to obtain results with an approximately $2\%$ better precision.
 
 \section{Conclusion}
 Regarding the time taken to construct the classification model, Random Forest is by far the best (150 times quicker than SVM). The classification performances are in the same order for all the features: first is SVM, then RF, then NN and finally Adaboost. Amongst all features, graph-of-words gives better results than bag-of-words, but takes more time to construct. For this model, degree centrality is better than eigenvector centrality. The influence of the side of the sliding window is critical, both in terms of precision and time complexity of the resulting graphs. A size of 4 is a good trade off between these two aspects. What's more, the use of a weighted edge graph improves by a factor of 3 the time taken to construct the document matrix.
