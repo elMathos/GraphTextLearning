@@ -58,3 +58,17 @@ print "Micro averaging precision for RF: " + str(errorPercentage("Adaboost", lab
 print "Macro averaging precision for RF: " + str(recall(test_labels, labels_pred_Adaboost, "macro"))
 print "Micro averaging recall for RF: " + str(recall(test_labels, labels_pred_Adaboost, "micro"))
 print "Macro averaging recall for RF: " + str(precision(test_labels, labels_pred_Adaboost, "macro"))
+
+
+
+# Cross val RF:
+n_est = [1, 5, 10, 15, 20, 25, 30, 40, 50, 100, 200, 300, 400, 500]
+err = np.zeros(len(n_est))
+i = 0
+for n in n_est:
+    print i
+    labels_pred_RF = RF_predict(tfidf_train, train_labels, tfidf_test, n_estim=n_est)
+    err[i] = errorPercentage("RF", labels_pred_RF, test_labels)
+    i  += 1
+    print(i)
+    
