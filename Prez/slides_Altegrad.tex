@@ -112,6 +112,7 @@
 	\frametitle{Results: bag of words}	
 	
 	\begin{table}[h]
+          \resizebox{\textwidth}{!}{%
           \begin{tabular}[scale=0.1]{|l|c|c|c|c|}
 		\hline
 		\multicolumn{1}{|c|}{Algorithm \textbackslash Performance} & \begin{tabular}[c]{@{}c@{}}Micro-averaging\\ precision/recall\end{tabular} & \begin{tabular}[c]{@{}c@{}}Macro-averaging\\ precision\end{tabular} & \begin{tabular}[c]{@{}c@{}}Macro-averaging\\ recall\end{tabular} & Training time \\ \hline
@@ -120,6 +121,7 @@
 		Random Forest                               & 91.6\%                                                                     & 89.46\%                                                             & 62.84\%                                                          & 7 s           \\ \hline
 		Adaboost                                    & 79.1\%                                                                    & 57.02\%                                                             & 57.86\%                                                          & 204 s           \\ \hline
 	\end{tabular}
+	}
 	\caption{Time and classification performance for various algorithms on the bag-of-words model}
 	\end{table}
 }
@@ -139,6 +141,7 @@
 	\frametitle{Results: graph of words (unweighted)}	
 	
 	\begin{table}[H]
+	\resizebox{\textwidth}{!}{%
 	\begin{tabular}{|l|c|c|c|}
 		\hline
 		\multicolumn{1}{|c|}{Algorithm \textbackslash Performance} & \begin{tabular}[c]{@{}c@{}}Micro-averaging\\ precision/recall\end{tabular} & \begin{tabular}[c]{@{}c@{}}Macro-averaging\\ precision\end{tabular} & \begin{tabular}[c]{@{}c@{}}Macro-averaging\\ recall\end{tabular} \\ \hline
@@ -147,6 +150,7 @@
 		Random Forest                               & 91.09\%                                                                     & 86.05\%                                                             & 66.07\%             \\ \hline
 		Adaboost                                    & 79.53\%                                                                    & 67.18\%                                                             & 67.36\%              \\ \hline
 	\end{tabular}
+	}
 	\caption{Classification performance by algorithm for Degree Centrality measure}
 \end{table}
 }
@@ -156,6 +160,7 @@
 {
 	\frametitle{Results: graph of words (unweighted)}	
 \begin{table}[H]
+\resizebox{\textwidth}{!}{%
 	\begin{tabular}{|l|c|c|c|}
 		\hline
 		\multicolumn{1}{|c|}{Algorithm \textbackslash Performance} & \begin{tabular}[c]{@{}c@{}}Micro-averaging\\ precision/recall\end{tabular} & \begin{tabular}[c]{@{}c@{}}Macro-averaging\\ precision\end{tabular} & \begin{tabular}[c]{@{}c@{}}Macro-averaging\\ recall\end{tabular} \\ \hline
@@ -164,6 +169,7 @@
 		Random Forest                               & 91.65\%                                                                     & 88.95\%                                                             & 68.47\%             \\ \hline
 		Adaboost                                    & 79.03\%                                                                    & 66.49\%                                                             & 60.98\%              \\ \hline
 	\end{tabular}	
+	}
 	\caption{Classification performance by algorithm for Eigenvector Centrality measure}
 
 \end{table}
@@ -175,6 +181,7 @@
 	\frametitle{Results: graph of words (weighted)}	
 	
 	\begin{table}[H]
+	\resizebox{\textwidth}{!}{%
 	\begin{tabular}{|l|c|c|c|}
 		\hline
 		\multicolumn{1}{|c|}{Algorithm \textbackslash Performance} & \begin{tabular}[c]{@{}c@{}}Micro-averaging\\ precision/recall\end{tabular} & \begin{tabular}[c]{@{}c@{}}Macro-averaging\\ precision\end{tabular} & \begin{tabular}[c]{@{}c@{}}Macro-averaging\\ recall\end{tabular} \\ \hline
@@ -183,6 +190,7 @@
 		Random Forest                               & 91.82\%                                                                     & 90.58\%                                                             & 69.33\%             \\ \hline
 		Adaboost                                    & 79.21\%                                                                    & 69.01\%                                                             & 65.97\%              \\ \hline
 	\end{tabular}
+	}
 	\caption{Classification performance by algorithm for Weighted Edges with Degree Centrality measure}
 \end{table}
 }
